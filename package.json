@@ -20,6 +20,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "yarn build",
     "deploy": "gh-pages --dist build --dest spending-report --repo git@github.com:Marik-D/marik-d.github.io.git --branch master ",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
