@@ -12,6 +12,7 @@ export function parseFile(str: string) {
     .split('\n')
     .slice(1)
     .map(parseLine)
+    .filter(validateTransaction)
 }
 
 function parseLine(str: string): Transaction {
@@ -30,7 +31,7 @@ function parseLine(str: string): Transaction {
     currency,
     balance: +balance,
     ...info,
-    details: additionalInfo,
+    details: additionalInfo.filter(x => x.length),
     id: `${operationDate}-${info.title || info.ownReferences}`,
   }
 }
@@ -59,7 +60,12 @@ function tryParseDetails(str: string) {
   } else if (m = tryMatch(/Referencje własne zleceniodawcy: (?<ownReferences>.+)$/g, str)) {
     return m
   } else if (m = tryMatch(/Data i czas operacji: (?<time>.+)$/g, str)) {
-    return { time: moment(m.time) }
+    const time = moment(m.time, 'YYYY-MM-DD HH:mm:ss')
+    if (time.isValid()) {
+      return { time }
+    } else {
+      return str
+    }
   } else {
     return str
   }
@@ -70,4 +76,15 @@ function tryMatch(re: RegExp, str: string) {
   if (match) {
     return match.groups
   }
-} 
+}
+
+function validateTransaction(t: Transaction): boolean {
+  return !!t &&
+    !!t.amount &&
+    !!t.balance &&
+    !!t.currency &&
+    !!t.details &&
+    !!t.id &&
+    !!t.operationDate &&
+    !!t.orderDate
+}

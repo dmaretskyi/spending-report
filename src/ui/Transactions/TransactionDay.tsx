@@ -1,17 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Transaction } from './Transaction';
+import { TransactionRow } from './TransactionRow';
+import { DayGroup } from '../../services/TransactionGroupingService';
+import { Moment } from 'moment';
 
-export const TransactionDay = ({ date, transactions, total, currency, balance }) => (
+export interface TransactionDayProps {
+  date: Moment
+  data: DayGroup
+}
+
+export const TransactionDay = ({ date, data }: TransactionDayProps) => (
   <Container>
     <Header>
       <Date>{date.format('YYYY-MMM-DD')}</Date>
-      <Amount>{total && total.toFixed(2)} {currency}</Amount>
-      <Balance>Balance at the end of the day: {balance && balance.toFixed(2)} {currency}</Balance>
+      <Amount>{(data.totalGained - data.totalSpent).toFixed(2)} PLN change</Amount>
+      <Balance>Resulting balance: {data.resultingBalance.toFixed(2)} PLN</Balance>
     </Header>
     <div>
-      {transactions.map(t => (
-        <Transaction {...t} description={t.address || t.title} />
+      {data.transactions.map(t => (
+        <TransactionRow key={t.id} transaction={t} />
       ))}
     </div>
   </Container>
