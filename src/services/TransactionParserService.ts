@@ -1,19 +1,26 @@
 import moment from "moment";
+import { Transaction, TransactionType } from "../models/Transaction";
 
-export function parseFile(str) {
+export class TransactionParserService {
+  parse(data: string) {
+    return parseFile(data)
+  }
+}
+
+export function parseFile(str: string) {
   return str
     .split('\n')
     .slice(1)
     .map(parseLine)
 }
 
-function parseLine(str) {
+function parseLine(str: string): Transaction {
   const [operationDate, orderDate, type, amount, currency, balance, ...details] = str
     .split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/g)
     .map(v => v.replace(/(^"|"$)/g, ''))
 
-  const additionalInfo = details.map(tryParseDetails).reduce((acc, x) => typeof x === 'string' ? [...acc, x] : acc, [])
-  const info = details.map(tryParseDetails).reduce((acc, x) => typeof x === 'string' ? acc : { ...acc, ...x }, {})
+  const additionalInfo = details.map(tryParseDetails).reduce<string[]>((acc, x) => typeof x === 'string' ? [...acc, x] : acc, [])
+  const info = details.map(tryParseDetails).reduce<Partial<Transaction>>((acc, x) => typeof x === 'string' ? acc : { ...acc, ...x }, {})
 
   return {
     operationDate: moment(operationDate),
@@ -28,7 +35,7 @@ function parseLine(str) {
   }
 }
 
-function tryParseType(str) {
+function tryParseType(str: string): TransactionType {
   switch (str) {
     case 'Płatność kartą': return 'CARD_PAYMENT'
     case 'Przelew na rachunek': return 'INCOMING_TRANSFER'
@@ -41,7 +48,7 @@ function tryParseType(str) {
   }
 }
 
-function tryParseDetails(str) {
+function tryParseDetails(str: string) {
   let m
   if (m = tryMatch(/Lokalizacja: Kraj: (?<country>\S+) Miasto: (?<city>\S+) Adres: (?<address>.+)$/g, str)) {
     return m
@@ -58,7 +65,7 @@ function tryParseDetails(str) {
   }
 }
 
-function tryMatch(re, str) {
+function tryMatch(re: RegExp, str: string) {
   const match = re.exec(str)
   if (match) {
     return match.groups

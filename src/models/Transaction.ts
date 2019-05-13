@@ -11,17 +11,18 @@ export type TransactionType
   | string
 
 export interface Transaction {
-  address: string
   amount: number
   balance: number
-  city: string
-  country: string
-  currency: string
   details: string[]
+  currency: string
   id: string
   operationDate: Moment
   orderDate: Moment
-  time: Moment
-  title: string
   type: TransactionType
+  country?: string
+  city?: string
+  address?: string
+  title?: string
+  ownReferences?: string
+  time?: Moment
 }

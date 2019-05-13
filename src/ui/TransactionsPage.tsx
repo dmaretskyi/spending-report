@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useServices } from "./services";
-import { parseFile } from "../parser";
 import { UploadFile } from "./UploadFile";
 import { group } from "../grouper";
 import { TransactionsList } from "./TransactionList";
 
 export const TransactionsPage = () => {
-  const { transactionStorageService } = useServices()
+  const { transactionStorageService, transactionParserService } = useServices()
 
   const [transactions, setTransactions] = useState(transactionStorageService.loadTransactions())
 
@@ -17,7 +16,7 @@ export const TransactionsPage = () => {
 
   return (
     <div>
-      <UploadFile onUpload={(file: any) => setTransactions(parseFile(file))} />
+      <UploadFile onUpload={file => setTransactions(transactionParserService.parse(file))} />
       <TransactionsList groups={group(transactions)} />
     </div>
   );
