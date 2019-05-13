@@ -2,6 +2,7 @@
   "name": "spending-report",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://marik-d.github.io/spending-report",
   "dependencies": {
     "@types/lodash": "^4.14.126",
     "@types/moment": "^2.13.0",
@@ -15,6 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "publish": "gh-pages --dist build --dest spending-report --repo git@github.com:Marik-D/marik-d.github.io.git --branch master ",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -32,5 +34,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^2.0.1"
   }
 }
