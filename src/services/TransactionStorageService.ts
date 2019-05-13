@@ -1,7 +1,8 @@
 import moment from "moment"
+import { Transaction } from "../models/Transaction";
 
 export class TransactionStorageService {
-  loadTransactions(): any[] {
+  loadTransactions(): Transaction[] {
     try {
       const json = localStorage.getItem(KEY)
       if (!json) return []
@@ -22,7 +23,7 @@ export class TransactionStorageService {
     }
   }
 
-  saveTransactions(transactions: any[]) {
+  saveTransactions(transactions: Transaction[]) {
     localStorage.setItem(KEY, JSON.stringify(transactions))
   }
 }
