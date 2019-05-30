@@ -16,36 +16,28 @@ export const TransactionRow = ({ transaction }: TransactionRowProps) => (
 )
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-
+  display: grid;
+  grid-template-columns: 50px 60px 110px 1fr;
+  grid-column-gap: 16px;
+  align-items: baseline;
   padding: 7px 25px;
-  background: white;
-  
-  border-top: 0.1px solid #DCDDE3;
 `
 
 const Time = styled.span`
-  width: 60px;
   color: #666666;
 `
 
 const Class = styled.span`
-  width: 80px;
   color: #5675FF;
 `
 
 const Amount = styled.span`
-  width: 120px;
   text-align: right;
-
   font-weight: bold;
+  font-family: 'Ubuntu Mono', monospace;
 `
 
 const Description = styled.span`
-  flex: 1;
-  margin-left: 20px;
-  font-weight: 200;
-
+  text-transform: lowercase;
   color: #666666;
 `

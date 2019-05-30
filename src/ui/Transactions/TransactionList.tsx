@@ -19,6 +19,4 @@ export const TransactionsList = ({ groups }: TransactionsListProps) => (
 const Container = styled.div`
   max-width: 750px;
   margin: auto;
-  border-left: 1px solid #373947;
-  border-right: 1px solid #373947;
 `
