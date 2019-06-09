@@ -16,6 +16,7 @@ export interface Transaction {
   details: string[]
   currency: string
   id: string
+  time: Moment
   operationDate: Moment
   orderDate: Moment
   type: TransactionType
@@ -24,5 +25,4 @@ export interface Transaction {
   address?: string
   title?: string
   ownReferences?: string
-  time?: Moment
 }

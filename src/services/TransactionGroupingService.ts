@@ -21,13 +21,13 @@ export interface DayGroup {
 
 export class TransactionGroupingService {
   group(transactions: Transaction[]): MonthlyGrouping {
-    const sorted = reverse(sortBy(transactions, t => (t.time || t.orderDate).format('YYYY-MM-DD HH:mm')))
+    const sorted = reverse(sortBy(transactions, t => t.time.format('YYYY-MM-DD HH:mm')))
     console.log(sorted)
     return mapValues(
-      groupBy(sorted, t => (t.time || t.orderDate).format('YYYY-MM')),
+      groupBy(sorted, t => t.time.format('YYYY-MM')),
       transactions => ({
         dailyGrouping: mapValues(
-          groupBy(transactions, t => (t.time || t.orderDate).format('YYYY-MM-DD')),
+          groupBy(transactions, t => t.time.format('YYYY-MM-DD')),
           transactions => ({
             transactions,
             totalSpent: calculateSpentTotal(transactions),
