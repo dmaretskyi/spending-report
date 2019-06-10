@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useServices } from "../services";
 import { UploadFile } from "../UploadFile";
 import { TransactionsList } from "./TransactionList";
@@ -13,10 +13,12 @@ export const TransactionsPage = () => {
   }, [transactions])
 
 
+  const groups = useMemo(() => transactionGroupingService.group(transactions), [transactions])
+
   return (
     <div>
       <UploadFile onUpload={file => setTransactions(transactionParserService.parse(file))} />
-      <TransactionsList groups={transactionGroupingService.group(transactions)} />
+      <TransactionsList groups={groups} />
     </div>
   );
 }

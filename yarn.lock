@@ -1223,6 +1223,13 @@
     "@types/prop-types" "*"
     "@types/react" "*"
 
+"@types/react-window@^1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@types/react-window/-/react-window-1.8.0.tgz#0649a855fd20e0541f5bc0079b14ae5e1ba60b93"
+  integrity sha512-+3pDwfns884TPYCCFFQObruGI1cOeVHAJ34KvyyhsFGTgCQtfR6Fhnh5TKdvATeHE2AslnU/dHx+tcfJgbhZ8Q==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^16.8.17":
   version "16.8.17"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.17.tgz#f287b76a5badb93bc9aa3f54521a3eb53d6c2374"
@@ -6100,7 +6107,7 @@ mem@^4.0.0:
     mimic-fn "^2.0.0"
     p-is-promise "^2.0.0"
 
-memoize-one@^5.0.0:
+"memoize-one@>=3.1.1 <6", memoize-one@^5.0.0:
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.0.4.tgz#005928aced5c43d890a4dfab18ca908b0ec92cbc"
   integrity sha512-P0z5IeAH6qHHGkJIXWw0xC2HNEgkx/9uWWBQw64FJj3/ol14VYdfVGWWr0fXfjhhv3TKVIqUq65os6O4GUNksA==
@@ -8096,6 +8103,14 @@ react-scripts@3.0.0:
     workbox-webpack-plugin "4.2.0"
   optionalDependencies:
     fsevents "2.0.6"
+
+react-window@^1.8.2:
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/react-window/-/react-window-1.8.2.tgz#edd0effe302196263ac3eac20a14c041acd4c17d"
+  integrity sha512-Qo9Z5qYvigRbSlCaWTor53G3EWVtHxXXny86EYsMG57H+4LJEEyh22PuWW6ECCkOh7sY6wWF78+wNGwPnMBCAg==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    memoize-one ">=3.1.1 <6"
 
 react@^16.8.6:
   version "16.8.6"
