@@ -48,7 +48,7 @@ export const ClassesModal = ({ onClose }: ClassesModalProps) => {
           <>
             <Label>Cases:</Label>
             <Cases>
-              {selectedClass.cases.map(c => <p>{c.toString()}</p>)}
+              {selectedClass.cases.map(c => <Case>{c.toString()}</Case>)}
             </Cases>
             <Label>Color:</Label>
             <TwitterPicker
@@ -106,4 +106,8 @@ const Cases = styled.div`
   height: 300px;
   overflow-y: scroll;
   margin-left: 16px;
+`
+
+const Case = styled.p`
+  font-family: 'Ubuntu Mono', monospace;
 `
