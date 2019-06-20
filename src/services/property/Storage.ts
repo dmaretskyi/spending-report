@@ -3,7 +3,7 @@ import { Property } from "./Property";
 export class Storage<T> extends Property<T> {
   constructor(private key: string, private initialValue: T) { super() }
 
-  get() {
+  get(): T {
     try {
       return JSON.parse(localStorage.getItem(this.key)!)
     } catch (err) {

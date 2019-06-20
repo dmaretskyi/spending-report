@@ -1,17 +1,19 @@
 export class TransactionClass {
   constructor(
     public name: string,
-    private cases: RegExp[]
+    public cases: RegExp[],
+    public color: string,
   ) { }
 
   matches(str: string) {
     return this.cases.some(c => !!str.match(c))
   }
 
-  toObject() {
+  toObject(): TransactionClassJSON {
     return {
       name: this.name,
       cases: this.cases.map(c => c.source),
+      color: this.color,
     }
   }
 
@@ -19,6 +21,16 @@ export class TransactionClass {
     if (typeof json.name !== 'string') throw new Error('Could not create TransactionClass instance')
     if (!Array.isArray(json.cases)) throw new Error('Could not create TransactionClass instance')
 
-    return new TransactionClass(json.name, json.cases.map((c: string) => new RegExp(c, 'i')))
+    return new TransactionClass(
+      json.name,
+      json.cases.map((c: string) => new RegExp(c, 'i')),
+      json.color || '#FFFFFF',
+    )
   }
+}
+
+export interface TransactionClassJSON {
+  name: string
+  cases: string[]
+  color: string
 }

@@ -1,19 +1,28 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Transaction } from '../../models/Transaction';
+import { ClassifiedTransaction } from '../../services/TransactionGroupingService';
+import { useServices } from '../services';
+import { ClassPill } from '../classes/ClassPill';
+import { useProperty } from '../hooks/useProperty';
 
 export interface TransactionRowProps {
-  transaction: Transaction
+  transaction: ClassifiedTransaction
 }
 
-export const TransactionRow = ({ transaction }: TransactionRowProps) => (
-  <Container key={transaction.id}>
-    <Time>{(transaction.time || transaction.orderDate).format('HH:mm')}</Time>
-    <Class>Other</Class>
-    <Amount>{transaction.amount.toFixed(2)} PLN</Amount>
-    <Description>{transaction.address || transaction.title}</Description>
-  </Container>
-)
+export const TransactionRow = ({ transaction }: TransactionRowProps) => {
+  const { classStorageService } = useServices()
+  const txClass = useProperty(classStorageService.getClassOrDefault(transaction.transactionClass), [])
+  return (
+    <Container key={transaction.id}>
+      <Time>{(transaction.time).format('HH:mm')}</Time>
+      <Class>
+        <ClassPill txClass={txClass} />
+      </Class>
+      <Amount>{transaction.amount.toFixed(2)} PLN</Amount>
+      <Description>{transaction.description}</Description>
+    </Container>
+  )
+}
 
 const Container = styled.div`
   display: grid;

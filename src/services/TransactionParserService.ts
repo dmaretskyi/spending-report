@@ -33,6 +33,7 @@ function parseLine(str: string): Transaction {
     ...info,
     details: additionalInfo.filter(x => x.length),
     id: `${operationDate}-${info.title || info.ownReferences}`,
+    description: info.address || info.title || '',
     time: info.time || moment(orderDate),
   }
 }

@@ -1,10 +1,8 @@
-import { StorageService } from "./StorageService";
-import { TransactionClass } from "../models/TransactionClass";
+import { TransactionClass, TransactionClassJSON } from "../models/TransactionClass";
 import { Storage } from "./property/Storage";
-import { worker } from "cluster";
 
 export class ClassStorageService {
-  private storageClasses = new Storage<TransactionClass[]>('CLASSES', [])
+  private storageClasses = new Storage<TransactionClassJSON[]>('CLASSES', [])
 
   constructor() {
   }
@@ -16,7 +14,26 @@ export class ClassStorageService {
   addClass(name: string) {
     this.storageClasses.set([
       ...this.storageClasses.get(),
-      new TransactionClass(name, []).toObject()
+      new TransactionClass(name, [], '#FFFFFF').toObject()
     ])
+  }
+
+  setColor(tc: TransactionClass, color: string) {
+    this.storageClasses.set(this.storageClasses.get().map(
+      c => c.name === tc.name ? { ...c, color } : c
+    ))
+  }
+
+  classify(description: string) {
+    const c = this.classes.get().find(c => c.matches(description))
+    return c ? c.name : 'Other'
+  }
+
+  getClass(name: string) {
+    return this.classes.map(c => c.find(c => c.name === name))
+  }
+
+  getClassOrDefault(name: string) {
+    return this.getClass(name).map(c => c || new TransactionClass(name, [], '#FFFFFF'))
   }
 }

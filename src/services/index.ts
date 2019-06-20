@@ -5,11 +5,10 @@ import { StorageService } from "./StorageService";
 import { ClassStorageService } from "./ClassesService";
 
 export function setup() {
-  const storageService = new StorageService()
   const transactionStorageService = new TransactionStorageService()
   const transactionParserService = new TransactionParserService()
-  const transactionGroupingService = new TransactionGroupingService()
   const classStorageService = new ClassStorageService()
+  const transactionGroupingService = new TransactionGroupingService(classStorageService)
 
   return {
     transactionStorageService,

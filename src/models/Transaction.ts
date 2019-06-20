@@ -13,6 +13,7 @@ export type TransactionType
 export interface Transaction {
   amount: number
   balance: number
+  description: string
   details: string[]
   currency: string
   id: string
