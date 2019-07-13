@@ -53,7 +53,7 @@ function tryParseType(str: string): TransactionType {
 
 function tryParseDetails(str: string) {
   let m
-  if (m = tryMatch(/Lokalizacja: Kraj: (?<country>\S+) Miasto: (?<city>\S+) Adres: (?<address>.+)$/g, str)) {
+  if (m = tryMatch(/Lokalizacja: Kraj: (?<country>.+) Miasto: (?<city>.+) Adres: (?<address>.+)$/g, str)) {
     return m
   } else if (m = tryMatch(/Nazwa nadawcy: (?<senderName>.+)$/g, str)) {
     return m
