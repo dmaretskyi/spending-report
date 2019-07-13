@@ -5,7 +5,9 @@ export class Storage<T> extends Property<T> {
 
   get(): T {
     try {
-      return JSON.parse(localStorage.getItem(this.key)!)
+      const data = localStorage.getItem(this.key)
+      if (data === null) return this.initialValue
+      return JSON.parse(data)
     } catch (err) {
       localStorage.removeItem(this.key)
       return this.initialValue

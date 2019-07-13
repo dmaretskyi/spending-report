@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 
 export function useProperty<T>(property: Property<T>, deps: readonly any[]) {
   const [value, setValue] = useState(property.get())
-  useEffect(() => property.subscribe(() => setValue(property.get())), deps)
+  useEffect(() => {
+    setValue(property.get())
+    return property.subscribe(() => setValue(property.get()))
+  }, deps)
   return value
 }

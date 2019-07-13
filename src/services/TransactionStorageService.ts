@@ -1,9 +1,16 @@
 import moment, { Moment } from "moment"
 import { groupBy, sortBy } from 'lodash'
 import { Transaction } from "../models/Transaction";
+import { Subject } from "./property/Subject";
 
 export class TransactionStorageService {
-  loadTransactions(month: Moment): Transaction[] {
+  private subject = Subject.empty()
+
+  transactionsFor(month: Moment) {
+    return this.subject.map(() => this.loadTransactions(month))
+  }
+
+  private loadTransactions(month: Moment): Transaction[] {
     const key = keyFor(month.format('YYYY-MM'));
     try {
       const json = localStorage.getItem(key)
@@ -33,9 +40,14 @@ export class TransactionStorageService {
       localStorage.setItem(keyFor(month), JSON.stringify(txs))
     })
 
+    this.subject.notify()
   }
 
-  listSavedMonths() {
+  get savedMonths() {
+    return this.subject.map(() => this.listSavedMonths())
+  }
+
+  private listSavedMonths() {
     const res = []
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i)
