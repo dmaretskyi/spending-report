@@ -18,9 +18,9 @@ export class ClassStorageService {
     ])
   }
 
-  setColor(tc: TransactionClass, color: string) {
+  saveClass(tc: TransactionClass) {
     this.storageClasses.set(this.storageClasses.get().map(
-      c => c.name === tc.name ? { ...c, color } : c
+      c => c.name === tc.name ? tc.toObject() : c
     ))
   }
 

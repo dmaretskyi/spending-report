@@ -6,6 +6,7 @@ import { Button } from '../common/Button';
 import { useProperty } from '../hooks/useProperty';
 import { TwitterPicker } from 'react-color';
 import { ClassPill } from './ClassPill';
+import { TransactionClass } from '../../models/TransactionClass';
 
 export interface ClassesModalProps {
   onClose: () => void
@@ -27,6 +28,19 @@ export const ClassesModal = ({ onClose }: ClassesModalProps) => {
 
   const selectedClass = classes.find(c => c.name === selected)
 
+  function setColor(tc: TransactionClass, color: string) {
+    tc.color = color
+    classStorageService.saveClass(tc)
+  }
+
+  function addCase(tc: TransactionClass) {
+    const regex = prompt('Enter regex without')
+    if (!regex) return
+
+    tc.cases.push(new RegExp(regex))
+    classStorageService.saveClass(tc)
+  }
+
   return (
     <MyModal onClose={onClose}>
       <Title>
@@ -46,15 +60,15 @@ export const ClassesModal = ({ onClose }: ClassesModalProps) => {
       <Details>
         {selectedClass && (
           <>
-            <Label>Cases:</Label>
+            <Label>Cases: <button onClick={() => addCase(selectedClass)}>Add</button> </Label>
             <Cases>
-              {selectedClass.cases.map(c => <Case>{c.toString()}</Case>)}
+              {selectedClass.cases.map(c => <Case>{c.source}</Case>)}
             </Cases>
             <Label>Color:</Label>
             <TwitterPicker
               color={selectedClass.color}
               triangle="hide"
-              onChangeComplete={color => classStorageService.setColor(selectedClass, color.hex)}
+              onChangeComplete={color => setColor(selectedClass, color.hex)}
             />
           </>
         )}
