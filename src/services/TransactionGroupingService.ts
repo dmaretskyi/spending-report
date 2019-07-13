@@ -9,6 +9,10 @@ export interface MonthGroup {
   totalSpent: number
   totalGained: number
   resultingBalance: number
+  categories: Dictionary<{
+    gained: number
+    spent: number
+  }>
 }
 
 export type DailyGrouping = Dictionary<DayGroup>
@@ -40,6 +44,13 @@ export class TransactionGroupingService {
       ...t,
       transactionClass: this.classesService.classify(t.description)
     }))
+    const categories = mapValues(
+      groupBy(withClasses, t => t.transactionClass),
+      txs => ({
+        gained: calculateGainedTotal(txs),
+        spent: calculateSpentTotal(txs),
+      }),
+    )
 
     return {
       dailyGrouping: mapValues(
@@ -54,6 +65,7 @@ export class TransactionGroupingService {
       totalSpent: calculateSpentTotal(transactions),
       totalGained: calculateGainedTotal(transactions),
       resultingBalance: last(transactions)!.balance,
+      categories,
     }
   }
 
