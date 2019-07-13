@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dictionary } from 'lodash';
+import { Dictionary, sortBy } from 'lodash';
 import styled from 'styled-components';
 import { useServices } from '../services';
 import { ClassPill } from '../classes/ClassPill';
@@ -7,16 +7,13 @@ import { useProperty } from '../hooks/useProperty';
 import { TransactionClass } from '../../models/TransactionClass';
 
 export interface CategoriesStatsProps {
-  data: Dictionary<{
-    gained: number
-    spent: number
-  }>
+  data: Dictionary<number>
 }
 
 export const CategoriesStats = ({ data }: CategoriesStatsProps) => (
   <Container>
-    {Object.entries(data).map(([cat, data]) => (
-      <Item category={cat} diff={data.gained - data.spent} />
+    {sortBy(Object.entries(data), x => x[1]).filter(x => x[1] > 0).map(([cat, data]) => (
+      <Item category={cat} diff={data} />
     ))}
   </Container>
 )

@@ -1,4 +1,5 @@
 import React from 'react'
+import { mapValues } from 'lodash'
 import { MonthGroup } from '../../services/TransactionGroupingService';
 import moment, { Moment } from 'moment'
 import { TransactionDay } from './TransactionDay';
@@ -17,7 +18,10 @@ export const TransactionMonth = ({ date, data }: TransactionMonthProps) => (
       <Gained>Gained: {data.totalGained.toFixed(2)} PLN</Gained>
       <Spent>Spent: {data.totalSpent.toFixed(2)} PLN</Spent>
       <p>Resulting balance: {data.resultingBalance.toFixed(2)} PLN</p>
-      <CategoriesStats data={data.categories} />
+      <h1>Expenses:</h1>
+      <CategoriesStats data={mapValues(data.categories, 'spent')} />
+      <h1>Gains:</h1>
+      <CategoriesStats data={mapValues(data.categories, 'gained')} />
     </Header>
     {Object.entries(data.dailyGrouping).map(([date, group]) => (
       <TransactionDay key={date} date={moment(date)} data={group} />
