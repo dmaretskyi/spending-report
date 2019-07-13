@@ -2,7 +2,7 @@ import { TransactionStorageService } from "./TransactionStorageService";
 import { TransactionParserService } from "./TransactionParserService";
 import { TransactionGroupingService } from "./TransactionGroupingService";
 import { StorageService } from "./StorageService";
-import { ClassStorageService } from "./ClassesService";
+import { ClassStorageService } from "./ClassStorageService";
 
 export function setup() {
   const transactionStorageService = new TransactionStorageService()

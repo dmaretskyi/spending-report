@@ -1,5 +1,5 @@
 import moment, { Moment } from "moment"
-import { groupBy } from 'lodash'
+import { groupBy, sortBy } from 'lodash'
 import { Transaction } from "../models/Transaction";
 
 export class TransactionStorageService {
@@ -45,7 +45,7 @@ export class TransactionStorageService {
       }
     }
 
-    return res
+    return sortBy(res)
   }
 }
 

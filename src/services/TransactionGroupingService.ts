@@ -1,6 +1,6 @@
 import { groupBy, mapValues, sumBy, last, sortBy, reverse, Dictionary } from 'lodash'
 import { Transaction } from '../models/Transaction';
-import { ClassStorageService } from './ClassesService';
+import { ClassStorageService } from './ClassStorageService';
 
 export type MonthlyGrouping = Dictionary<MonthGroup>
 
