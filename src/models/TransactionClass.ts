@@ -27,6 +27,10 @@ export class TransactionClass {
       json.color || '#FFFFFF',
     )
   }
+
+  addCase(source: string) {
+    this.cases.push(new RegExp(source, 'i'))
+  }
 }
 
 export interface TransactionClassJSON {

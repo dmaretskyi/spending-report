@@ -12,7 +12,7 @@ export interface TransactionDayProps {
 export const TransactionDay = ({ date, data }: TransactionDayProps) => (
   <Container>
     <Header>
-      <Date>{date.format('YYYY-MMM-DD')}</Date>
+      <Date>{date.format('ddd MMM-DD')}</Date>
       <Amount>{(data.totalGained - data.totalSpent).toFixed(2)} PLN</Amount>
       <div>Resulting balance: {data.resultingBalance.toFixed(2)} PLN</div>
     </Header>
