@@ -31,6 +31,10 @@ export class TransactionClass {
   addCase(source: string) {
     this.cases.push(new RegExp(source, 'i'))
   }
+
+  equals(other: TransactionClass) {
+    return this.name === other.name
+  }
 }
 
 export interface TransactionClassJSON {

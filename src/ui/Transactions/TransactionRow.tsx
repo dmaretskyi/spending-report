@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { escapeRegExp } from 'lodash'
 import { ClassifiedTransaction } from '../../services/TransactionGroupingService';
 import { useServices } from '../services';
 import { ClassPill } from '../classes/ClassPill';
 import { useProperty } from '../hooks/useProperty';
+import { QuickClassDialog } from './QuickClassModal';
 
 export interface TransactionRowProps {
   transaction: ClassifiedTransaction
@@ -13,6 +14,8 @@ export interface TransactionRowProps {
 export const TransactionRow = ({ transaction }: TransactionRowProps) => {
   const { classStorageService } = useServices()
   const txClass = useProperty(classStorageService.getClassOrDefault(transaction.transactionClass), [])
+
+  const [dialogVisible, setDialogVisible] = useState(false)
 
   function setClass() {
     const classes = classStorageService.classes.get()
@@ -32,9 +35,14 @@ export const TransactionRow = ({ transaction }: TransactionRowProps) => {
   return (
     <Container key={transaction.id}>
       <Time>{(transaction.time).format('HH:mm')}</Time>
-      <ClassPill txClass={txClass} onClick={setClass} />
+      <ClassPill txClass={txClass} onClick={() => setDialogVisible(true)} />
       <Amount>{transaction.amount.toFixed(2)} PLN</Amount>
       <Description>{transaction.description}</Description>
+      <QuickClassDialog
+        isVisible={dialogVisible}
+        onClose={() => setDialogVisible(false)}
+        transactionDescription={transaction.description}
+      />
     </Container>
   )
 }
