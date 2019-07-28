@@ -5,8 +5,7 @@ import { useProperty } from '../hooks/useProperty';
 import { TransactionClass } from '../../models/TransactionClass';
 import { ClassList } from '../classes/ClassList'
 import styled from 'styled-components';
-import { useMutable } from '../hooks/useMutable';
-import { useMutableCallback } from '../hooks/useMutableCallback';
+import { useMutableCallback } from 'react-use-mutable'
 
 export interface QuickClassDialogProps {
   isVisible: boolean

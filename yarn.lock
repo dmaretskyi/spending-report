@@ -1250,6 +1250,14 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
+"@types/react@^16.8.23":
+  version "16.8.23"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.23.tgz#ec6be3ceed6353a20948169b6cb4c97b65b97ad2"
+  integrity sha512-abkEOIeljniUN9qB5onp++g0EY38h7atnDHxwKUFz1r3VH1+yG1OKi2sNPTyObL40goBmfKFpdii2lEzwLX1cA==
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
@@ -8132,6 +8140,13 @@ react-scripts@3.0.0:
     workbox-webpack-plugin "4.2.0"
   optionalDependencies:
     fsevents "2.0.6"
+
+react-use-mutable@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-use-mutable/-/react-use-mutable-0.1.0.tgz#95cc696f7514b5373d01678178faf6a1d0d70d8f"
+  integrity sha512-a6gVbMEIdgc9U6P50v8DcDeoxvzHRqTGA9bJ1NGpGOCyrbeakBkkm9qPYrQWp6/lbBmG3AIlVYxk7mX0qZky/Q==
+  dependencies:
+    "@types/react" "^16.8.23"
 
 react-window@^1.8.2:
   version "1.8.2"
