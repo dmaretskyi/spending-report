@@ -12,9 +12,8 @@ export interface TransactionDayProps {
 export const TransactionDay = ({ date, data }: TransactionDayProps) => (
   <Container>
     <Header>
-      <Date>{date.format('ddd MMM-DD')}</Date>
+      <Date>{date.format('DD MMMM dddd')}</Date>
       <Amount>{(data.totalGained - data.totalSpent).toFixed(2)} PLN</Amount>
-      <div>Resulting balance: {data.resultingBalance.toFixed(2)} PLN</div>
     </Header>
     <Items>
       {data.transactions.map(t => (
@@ -35,7 +34,7 @@ const Container = styled.div`
 
 const Header = styled.div`
   display: grid;
-  grid-template-columns: 50px 60px 110px 1fr;
+  grid-template-columns: 1fr 2fr;
   grid-column-gap: 16px;
   align-items: baseline;
 
@@ -48,7 +47,6 @@ const Items = styled.div`
 `
 
 const Date = styled.span`
-  grid-column: span 2;
 `
 
 const Amount = styled.span`

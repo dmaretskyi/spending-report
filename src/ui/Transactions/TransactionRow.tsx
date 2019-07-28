@@ -32,9 +32,7 @@ export const TransactionRow = ({ transaction }: TransactionRowProps) => {
   return (
     <Container key={transaction.id}>
       <Time>{(transaction.time).format('HH:mm')}</Time>
-      <Class>
-        <ClassPill txClass={txClass} onClick={setClass} />
-      </Class>
+      <ClassPill txClass={txClass} onClick={setClass} />
       <Amount>{transaction.amount.toFixed(2)} PLN</Amount>
       <Description>{transaction.description}</Description>
     </Container>
@@ -43,7 +41,7 @@ export const TransactionRow = ({ transaction }: TransactionRowProps) => {
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 50px 60px 110px 1fr;
+  grid-template-columns: 50px 120px 110px 1fr;
   grid-column-gap: 16px;
   align-items: baseline;
   padding: 7px 25px;
@@ -53,8 +51,7 @@ const Time = styled.span`
   color: #666666;
 `
 
-const Class = styled.span`
-  color: #5675FF;
+const Class = styled(ClassPill)`
 `
 
 const Amount = styled.span`
