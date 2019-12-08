@@ -1,4 +1,5 @@
-import { Moment } from "moment";
+import moment, { Moment } from "moment";
+import { asAnyOf, asArray, asFlatMapped, asNumber, asObject, asString, Result } from '@restless/sanitizers'
 
 export type TransactionType
   = 'CARD_PAYMENT'
@@ -27,3 +28,36 @@ export interface Transaction {
   title?: string
   ownReferences?: string
 }
+
+const asMoment = asFlatMapped<string, Moment>(
+  asString,
+  (str, path) => {
+    const val = moment(str)
+    if(!val.isValid()) return Result.error([{ expected: 'date', path }])
+    return Result.ok(val)
+  }
+)
+
+const asExact<T>
+
+const asEnum = <T extends string> (...variants: T[]) => asAnyOf(variants.map(variant => ())
+
+export const asTransactionType = as
+
+export const asTransaction = asObject({
+  amount: asNumber,
+  balance: asNumber,
+  description: asString,
+  details: asArray(asString),
+  currency: asString,
+  id: asString,
+  time: asMoment,
+  operationDate: asMoment,
+  orderDate: asMoment,
+  type: TransactionType
+  country?: string
+  city?: string
+  address?: string
+  title?: string
+  ownReferences?: string
+})

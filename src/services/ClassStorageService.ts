@@ -1,39 +1,35 @@
-import { TransactionClass, TransactionClassJSON } from "../models/TransactionClass";
-import { Storage } from "./property/Storage";
+import { TransactionClass } from "../models/TransactionClass";
+import { asArray } from '@restless/sanitizers'
+import { Property } from 'reactive-properties'
+import { Storage } from './containers/Storage'
 
 export class ClassStorageService {
-  private storageClasses = new Storage<TransactionClassJSON[]>('CLASSES', [])
-
-  constructor() {
-  }
-
-  get classes() {
-    return this.storageClasses.map(cs => cs.map(c => TransactionClass.fromObject(c)))
-  }
+  private transactionClassesStorage = new Storage<TransactionClass[]>('CLASSES', [], asArray(TransactionClass.sanitizer))
+  transactionClasses: Property<TransactionClass[]> = this.transactionClassesStorage
 
   addClass(name: string) {
-    this.storageClasses.set([
-      ...this.storageClasses.get(),
-      new TransactionClass(name, [], '#FFFFFF').toObject()
+    this.transactionClassesStorage.set([
+      ...this.transactionClassesStorage.get(),
+      new TransactionClass(name, [], '#FFFFFF')
     ])
   }
 
   saveClass(tc: TransactionClass) {
-    this.storageClasses.set(this.storageClasses.get().map(
-      c => c.name === tc.name ? tc.toObject() : c
+    this.transactionClassesStorage.set(this.transactionClassesStorage.get().map(
+      c => c.name === tc.name ? tc : c
     ))
   }
 
   classify(description: string) {
-    const c = this.classes.get().find(c => c.matches(description))
+    const c = this.transactionClassesStorage.get().find(c => c.matches(description))
     return c ? c.name : 'Other'
   }
 
   getClass(name: string) {
-    return this.classes.map(c => c.find(c => c.name === name))
+    return this.transactionClassesStorage.get().find(c => c.name === name)
   }
 
   getClassOrDefault(name: string) {
-    return this.getClass(name).map(c => c || new TransactionClass(name, [], '#FFFFFF'))
+    return this.getClass(name) || new TransactionClass(name, [], '#FFFFFF')
   }
 }

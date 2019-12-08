@@ -1,4 +1,7 @@
+import { asArray, asMapped, asObject, asString } from '@restless/sanitizers'
+
 export class TransactionClass {
+
   constructor(
     public name: string,
     public cases: RegExp[],
@@ -9,7 +12,7 @@ export class TransactionClass {
     return this.cases.some(c => !!str.match(c))
   }
 
-  toObject(): TransactionClassJSON {
+  toJSON() {
     return {
       name: this.name,
       cases: this.cases.map(c => c.source),
@@ -17,16 +20,18 @@ export class TransactionClass {
     }
   }
 
-  static fromObject(json: any) {
-    if (typeof json.name !== 'string') throw new Error('Could not create TransactionClass instance')
-    if (!Array.isArray(json.cases)) throw new Error('Could not create TransactionClass instance')
-
-    return new TransactionClass(
+  static sanitizer = asMapped(
+    asObject({
+      name: asString,
+      cases: asArray(asString),
+      color: asString,
+    }),
+    json => new TransactionClass(
       json.name,
-      json.cases.map((c: string) => new RegExp(c, 'i')),
-      json.color || '#FFFFFF',
+      json.cases.map(regex => new RegExp(regex, 'i')),
+      json.color,
     )
-  }
+  )
 
   addCase(source: string) {
     this.cases.push(new RegExp(source, 'i'))
@@ -35,10 +40,4 @@ export class TransactionClass {
   equals(other: TransactionClass) {
     return this.name === other.name
   }
-}
-
-export interface TransactionClassJSON {
-  name: string
-  cases: string[]
-  color: string
 }

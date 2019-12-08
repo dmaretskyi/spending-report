@@ -2,9 +2,10 @@ import moment, { Moment } from "moment"
 import { groupBy, sortBy } from 'lodash'
 import { Transaction } from "../models/Transaction";
 import { Subject } from "./property/Subject";
+import { StorageMap } from './containers/StorageMap'
 
 export class TransactionStorageService {
-  private subject = Subject.empty()
+  private storage: StorageMap<Transaction>
 
   transactionsFor(month: Moment) {
     return this.subject.map(() => this.loadTransactions(month))
