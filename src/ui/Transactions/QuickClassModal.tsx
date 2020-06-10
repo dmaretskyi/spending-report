@@ -17,7 +17,7 @@ export const QuickClassDialog = ({ isVisible, onClose, transactionDescription }:
   const { classStorageService } = useServices()
   const classes = useProperty(classStorageService.classes, [])
 
-  const [selectedClass, setSelectedClass] = useState<TransactionClass | undefined>()
+  const [selectedClass, setSelectedClass] = useState<TransactionClass | undefined>(classes[0])
 
   useEffect(() => {
     if (isVisible) {
@@ -37,13 +37,23 @@ export const QuickClassDialog = ({ isVisible, onClose, transactionDescription }:
       const newIdx = Math.max(classIdx - 1, 0)
       setSelectedClass(classes[newIdx])
       e.preventDefault()
+    } else if(e.key === 'Enter') {
+      if(selectedClass) {
+        addCase(selectedClass)
+      }
     }
   })
+
+  function addCase(cl: TransactionClass) {
+    cl.cases.push(new RegExp(`^${transactionDescription}`))
+    classStorageService.saveClass(cl)
+    onClose()
+  }
 
   if (!isVisible) return null
   return (
     <MyModal onClose={onClose} noClose>
-      <ClassList classes={classes} selected={selectedClass || classes[0]} />
+      <ClassList classes={classes} selected={selectedClass || classes[0]} onClick={addCase} />
     </MyModal>
   )
 }
