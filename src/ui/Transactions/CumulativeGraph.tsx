@@ -20,7 +20,7 @@ export const CumulativeGraph = ({ month, data }: CumulativeGraphProps) => {
           <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
         </linearGradient>
       </defs>
-      <XAxis type="number" dataKey="date"/>
+      <XAxis type="number" dataKey="date" domain={[1, 'dataMax']}/>
       <YAxis />
       <CartesianGrid strokeDasharray="3 3" />
       <Area type="monotone" dataKey="value" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
