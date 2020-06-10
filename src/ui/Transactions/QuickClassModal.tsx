@@ -45,7 +45,7 @@ export const QuickClassDialog = ({ isVisible, onClose, transactionDescription }:
   })
 
   function addCase(cl: TransactionClass) {
-    cl.cases.push(new RegExp(`^${transactionDescription}`))
+    cl.addCase(transactionDescription)
     classStorageService.saveClass(cl)
     onClose()
   }

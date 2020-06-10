@@ -37,7 +37,7 @@ export const ClassesModal = ({ onClose }: ClassesModalProps) => {
     const regex = prompt('Enter regex without')
     if (!regex) return
 
-    tc.cases.push(new RegExp(regex))
+    tc.cases.push(regex)
     classStorageService.saveClass(tc)
   }
 
@@ -62,7 +62,7 @@ export const ClassesModal = ({ onClose }: ClassesModalProps) => {
           <>
             <Label>Cases: <button onClick={() => addCase(selectedClass)}>Add</button> </Label>
             <Cases>
-              {selectedClass.cases.map(c => <Case>{c.source}</Case>)}
+              {selectedClass.cases.map(c => <Case>{c}</Case>)}
             </Cases>
             <Label>Color:</Label>
             <TwitterPicker
@@ -124,4 +124,5 @@ const Cases = styled.div`
 
 const Case = styled.p`
   font-family: 'Ubuntu Mono', monospace;
+  text-transform: uppercase;
 `

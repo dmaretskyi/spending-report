@@ -1,18 +1,19 @@
 export class TransactionClass {
   constructor(
     public name: string,
-    public cases: RegExp[],
+    public cases: string[],
     public color: string,
   ) { }
 
   matches(str: string) {
-    return this.cases.some(c => !!str.match(c))
+    const lower = str.toLowerCase()
+    return this.cases.some(c => lower.startsWith(c.toLowerCase()))
   }
 
   toObject(): TransactionClassJSON {
     return {
       name: this.name,
-      cases: this.cases.map(c => c.source),
+      cases: this.cases,
       color: this.color,
     }
   }
@@ -23,13 +24,13 @@ export class TransactionClass {
 
     return new TransactionClass(
       json.name,
-      json.cases.map((c: string) => new RegExp(c, 'i')),
+      json.cases,
       json.color || '#FFFFFF',
     )
   }
 
   addCase(source: string) {
-    this.cases.push(new RegExp(source, 'i'))
+    this.cases.push(source.toLowerCase())
   }
 
   equals(other: TransactionClass) {
