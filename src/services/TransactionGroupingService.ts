@@ -7,10 +7,8 @@ export type MonthlyGrouping = Dictionary<MonthGroup>
 export interface MonthGroup {
   dailyGrouping: DailyGrouping
   totalSpent: number
-  totalGained: number
   resultingBalance: number
   categories: Dictionary<{
-    gained: number
     spent: number
   }>
 }
@@ -20,7 +18,6 @@ export type DailyGrouping = Dictionary<DayGroup>
 export interface DayGroup {
   transactions: ClassifiedTransaction[]
   totalSpent: number
-  totalGained: number
   resultingBalance: number
 }
 
@@ -47,7 +44,6 @@ export class TransactionGroupingService {
     const categories = mapValues(
       groupBy(withClasses, t => t.transactionClass),
       txs => ({
-        gained: calculateGainedTotal(txs),
         spent: calculateSpentTotal(txs),
       }),
     )
@@ -58,12 +54,10 @@ export class TransactionGroupingService {
         transactions => ({
           transactions,
           totalSpent: calculateSpentTotal(transactions),
-          totalGained: calculateGainedTotal(transactions),
           resultingBalance: last(transactions)!.balance,
         }),
       ),
       totalSpent: calculateSpentTotal(transactions),
-      totalGained: calculateGainedTotal(transactions),
       resultingBalance: last(transactions)!.balance,
       categories,
     }
@@ -74,13 +68,6 @@ export class TransactionGroupingService {
 function calculateSpentTotal(transactions: Transaction[]) {
   return -sumBy(
     transactions.filter(t => t.amount < 0),
-    'amount',
-  )
-}
-
-function calculateGainedTotal(transactions: Transaction[]) {
-  return sumBy(
-    transactions.filter(t => t.amount > 0),
     'amount',
   )
 }

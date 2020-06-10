@@ -15,12 +15,9 @@ export const TransactionMonth = ({ date, data }: TransactionMonthProps) => (
   <div>
     <Header>
       <h1>{date.format('MMMM YYYY')}</h1>
-      <Gained>Gained: {data.totalGained.toFixed(2)} PLN</Gained>
       <Spent>Spent: {data.totalSpent.toFixed(2)} PLN</Spent>
       <p>Resulting balance: {data.resultingBalance.toFixed(2)} PLN</p>
-      <h1>Expenses:</h1>
       <CategoriesStats data={mapValues(data.categories, 'spent')} />
-      <h1>Gains:</h1>
       <CategoriesStats data={mapValues(data.categories, 'gained')} />
     </Header>
     {Object.entries(data.dailyGrouping).map(([date, group]) => (

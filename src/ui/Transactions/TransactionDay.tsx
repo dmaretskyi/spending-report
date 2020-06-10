@@ -13,7 +13,7 @@ export const TransactionDay = ({ date, data }: TransactionDayProps) => (
   <Container>
     <Header>
       <Date>{date.format('DD MMMM dddd')}</Date>
-      <Amount>{(data.totalGained - data.totalSpent).toFixed(2)} PLN</Amount>
+      <Amount>{(-data.totalSpent).toFixed(2)} PLN</Amount>
     </Header>
     <Items>
       {data.transactions.map(t => (
