@@ -20,7 +20,7 @@ export const TransactionMonth = ({ date, data }: TransactionMonthProps) => (
       <p>Resulting balance: {data.resultingBalance.toFixed(2)} PLN</p>
       <CategoriesStats data={mapValues(data.categories, 'spent')} />
       <Details>
-        <CumulativeGraph data={data} />
+        <CumulativeGraph month={date} data={data} />
       </Details>
     </Header>
     {Object.entries(data.dailyGrouping).map(([date, group]) => (
