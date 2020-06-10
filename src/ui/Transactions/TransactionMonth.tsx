@@ -5,6 +5,7 @@ import moment, { Moment } from 'moment'
 import { TransactionDay } from './TransactionDay';
 import styled from 'styled-components';
 import { CategoriesStats } from './CategoriesStats';
+import { CumulativeGraph } from './CumulativeGraph';
 
 export interface TransactionMonthProps {
   date: Moment
@@ -18,6 +19,9 @@ export const TransactionMonth = ({ date, data }: TransactionMonthProps) => (
       <Spent>Spent: {data.totalSpent.toFixed(2)} PLN</Spent>
       <p>Resulting balance: {data.resultingBalance.toFixed(2)} PLN</p>
       <CategoriesStats data={mapValues(data.categories, 'spent')} />
+      <Details>
+        <CumulativeGraph data={data} />
+      </Details>
     </Header>
     {Object.entries(data.dailyGrouping).map(([date, group]) => (
       <TransactionDay key={date} date={moment(date)} data={group} />
@@ -35,10 +39,10 @@ const Header = styled.div`
   padding: 30px 25px;
 `
 
-const Gained = styled.p`
-  color: green;
-`
-
 const Spent = styled.p`
   color: red;
+`
+
+const Details = styled.div`
+  padding-top: 32px;
 `
